@@ -1,0 +1,82 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Werror",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/main.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Werror",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "token.o",
+      "src/lexer/token.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/lexer/token.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/token.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Werror",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "lexer.o",
+      "src/lexer/lexer.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/lexer/lexer.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/lexer.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Werror",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "ast.o",
+      "src/parser/ast.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/parser/ast.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/ast.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-Werror",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "parser.o",
+      "src/parser/parser.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/parser/parser.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/parser.o"
+  }
+]

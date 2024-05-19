@@ -1,0 +1,64 @@
+#pragma once
+
+#include <string>
+
+// x: int = 123 
+// x : int : 123
+
+namespace Crimson {
+
+enum class TokenKind {
+    Err,
+    Eof,
+
+    Plus,
+    Minus,
+    Star,
+    Slash,
+    Mod,
+    Caret,
+    Hash,
+    Ampersand,
+    Tilde,
+    Bar,
+    Lparen,
+    Rparen,
+    Lbrace,
+    Rbrace,
+    LBracket,
+    Rbracket,
+    Colon,
+    Semicolon,
+    Comma,
+
+    // Keywords
+    And,
+    Break,
+    Else,
+    False,
+    For,
+    Ident,
+    Let,
+    NumLiteral,
+    NumType,
+    Proc,
+    If,
+    Return,
+    True,
+    While,
+};
+
+class Token {
+public:
+    Token() = default;
+    Token(std::string&& literal, TokenKind kind);
+    Token(Token&& other) noexcept;
+    Token& operator=(Token&& other) noexcept;
+    const std::string& literal() const;
+    TokenKind kind() const ;
+private:
+    std::string m_literal;
+    TokenKind m_kind;
+};
+
+} // Crimson
