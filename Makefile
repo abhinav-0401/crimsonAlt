@@ -1,4 +1,4 @@
-CFLAG = -Wall -Werror
+CFLAG = -Wall
 CC = g++
 INCLUDE = -I src/
 

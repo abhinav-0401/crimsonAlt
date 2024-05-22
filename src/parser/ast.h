@@ -1,11 +1,16 @@
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include "lexer/token.h"
 
 namespace Crimson {
 
 enum class NodeType {
+    Program,
     NumLiteral,
+    BinaryExpr,
 };
 
 class Stmt {
@@ -15,7 +20,7 @@ public:
 
 class Expr : public Stmt {
 public:
-    virtual NodeType expr_type() = 0;
+    virtual NodeType stmt_type() = 0;
 };
 
 class NumLiteral : public Expr {
@@ -23,18 +28,32 @@ public:
     NumLiteral() = default;
     NumLiteral(double value);
     double value();
+    NodeType stmt_type() override;
 private:
     double m_value;
+    NodeType m_node_kind = NodeType::NumLiteral;
 };
 
 class BinaryExpr : public Expr {
 public:
     BinaryExpr() = delete;
-    BinaryExpr(Expr&& left, Expr&& right, Token op);
+    BinaryExpr(std::unique_ptr<Expr>, std::unique_ptr<Expr>, Token op);
+    NodeType stmt_type() override;
 private:
-    Expr* m_left;
-    Expr* m_right;
-    Token op;
+    std::unique_ptr<Expr> m_left;
+    std::unique_ptr<Expr> m_right;
+    Token m_op;
+    NodeType m_node_kind = NodeType::BinaryExpr;
+};
+
+class Program : public Stmt {
+public:
+    Program();
+    NodeType stmt_type() override;
+    void append_stmt(std::unique_ptr<Stmt>&& stmt);
+private:
+    std::vector<std::unique_ptr<Stmt>> m_body;
+    NodeType m_node_kind = NodeType::Program;
 };
 
 } // Crimson

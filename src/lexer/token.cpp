@@ -10,6 +10,11 @@ Token::Token(std::string&& literal, TokenKind kind)
 }
 
 Token::Token(Token&& other) noexcept
+    : m_literal(std::move(other.m_literal)), m_kind(other.m_kind)
+{
+}
+
+Token::Token(Token& other)
     : m_literal(other.m_literal), m_kind(other.m_kind)
 {
 }

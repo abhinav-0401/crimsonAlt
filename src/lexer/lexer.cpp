@@ -18,6 +18,7 @@ const std::vector<Token>& Lexer::lex() {
     for (Token token = lex_token(); token.kind() != TokenKind::Eof; token = lex_token()) {
         m_tokens.push_back(std::move(token));
     }
+    m_tokens.push_back(Token("EOF", TokenKind::Eof));
     
     return m_tokens;
 }
