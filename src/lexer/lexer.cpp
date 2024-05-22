@@ -1,9 +1,11 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 #include <iostream>
 
 #include "lexer.h"
+#include "token.h"
 #include "using.h"
 
 namespace Crimson {
@@ -20,6 +22,10 @@ const std::vector<Token>& Lexer::lex() {
     }
     m_tokens.push_back(Token("EOF", TokenKind::Eof));
     
+    return m_tokens;
+}
+
+std::vector<Token> Lexer::tokens() {
     return m_tokens;
 }
 

@@ -53,7 +53,8 @@ public:
     Token() = default;
     Token(std::string&& literal, TokenKind kind);
     Token(Token&& other) noexcept;
-    Token(Token& other);
+    Token(const Token& other);
+    Token& operator=(const Token& other) = default;
     Token& operator=(Token&& other) noexcept;
     const std::string& literal() const;
     TokenKind kind() const ;

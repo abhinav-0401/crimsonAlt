@@ -1,6 +1,7 @@
 #include <utility>
 #include <memory>
 #include <string>
+#include <iostream>
 
 #include "ast.h"
 #include "parser.h"
@@ -14,11 +15,14 @@ Parser::Parser(std::vector<Token>&& tokens)
 }
 
 void Parser::parse() {
-    // 2
     while (not_eof()) {
         auto stmt = parse_stmt();
         m_program->append_stmt(std::move(stmt));
     }
+}
+
+void Parser::print_program() {
+    m_program->print_body();
 }
 
 std::unique_ptr<Stmt> Parser::parse_stmt() {
@@ -27,6 +31,7 @@ std::unique_ptr<Stmt> Parser::parse_stmt() {
     switch (token.kind()) {
     case TokenKind::NumLiteral:
         auto num_lit = std::make_unique<NumLiteral>(std::stod(token.literal()));
+        advance();
         return num_lit;
     }
 }

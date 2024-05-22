@@ -14,7 +14,7 @@ Token::Token(Token&& other) noexcept
 {
 }
 
-Token::Token(Token& other)
+Token::Token(const Token& other)
     : m_literal(other.m_literal), m_kind(other.m_kind)
 {
 }

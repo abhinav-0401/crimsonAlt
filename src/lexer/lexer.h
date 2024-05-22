@@ -13,6 +13,7 @@ class Lexer {
 public:
     Lexer(std::string&& src);
     const std::vector<Token>& lex();
+    std::vector<Token> tokens();
 private:
     Token lex_token();
     void advance();
