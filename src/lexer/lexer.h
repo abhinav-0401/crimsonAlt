@@ -5,7 +5,6 @@
 #include <unordered_map>
 
 #include "token.h"
-#include "lexer.h"
 
 namespace Crimson {
 
