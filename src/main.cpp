@@ -10,17 +10,17 @@
 int main() {
     std::cout << "This is blasphemy\n";
 
-    std::string src = "23";
+    std::string src = "(23 + 3) * 3";
     Crimson::Lexer lexer(std::move(src));
 
     // const std::vector<Crimson::Token>& tokens = lexer.lex();
-    lexer.lex();
+    const std::vector<Crimson::Token>& tokens = lexer.lex();
     Crimson::Parser parser(lexer.tokens());
+
+    for (const auto& token : tokens) {
+        std::cout << "main token: " << token.literal() << " "
+            << static_cast<std::underlying_type<Crimson::TokenKind>::type>(token.kind()) << "\n";
+    }
     parser.parse();
     parser.print_program();
-
-    // for (const auto& token : tokens) {
-    //     std::cout << "main token: " << token.literal() << " "
-    //         << static_cast<std::underlying_type<Crimson::TokenKind>::type>(token.kind()) << "\n";
-    // }
 }

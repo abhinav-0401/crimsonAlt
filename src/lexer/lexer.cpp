@@ -50,6 +50,12 @@ Token Lexer::lex_token() {
     case ':':
         token = new_token(m_ch, TokenKind::Colon);
         break;
+    case '(':
+        token = new_token(m_ch, TokenKind::Lparen);
+        break;
+    case ')':
+        token = new_token(m_ch, TokenKind::Rparen);
+        break;
     case '\0':
         token = new_token(m_ch, TokenKind::Eof);
         break;

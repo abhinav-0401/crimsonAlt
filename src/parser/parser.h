@@ -16,9 +16,14 @@ public:
     void print_program();
 private:
     std::unique_ptr<Stmt> parse_stmt();
+    std::unique_ptr<Expr> parse_expr();
+    std::unique_ptr<Expr> parse_term();
+    std::unique_ptr<Expr> parse_factor();
+    std::unique_ptr<Expr> parse_num_lit();
     bool not_eof();
     const Token& at();
     const Token& advance();
+    void expect(TokenKind kind);
 
     std::vector<Token> m_tokens;
     std::unique_ptr<Program> m_program;

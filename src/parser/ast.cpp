@@ -15,7 +15,7 @@ double NumLiteral::value() { return m_value; }
 NodeType NumLiteral::stmt_type() { return m_node_kind; }
 
 void NumLiteral::print_info() {
-    std::cout << "NumLiteral: " << m_value << "\n";
+    std::cout << "NumLiteral: " << m_value;
 }
 
 BinaryExpr::BinaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> right, Token op)
@@ -26,6 +26,14 @@ BinaryExpr::BinaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> right, 
 NodeType BinaryExpr::stmt_type() { return m_node_kind; }
 
 void BinaryExpr::print_info() {
+    std::cout << "BinaryExpr: \n";
+    std::cout << "\tleft: ";
+    m_left->print_info();
+    std::cout << "\n";
+    std::cout << "\tright: ";
+    m_right->print_info();
+    std::cout << "\n";
+    std::cout << "\toperator: " << m_op.literal() << "\n";
 }
 
 void Program::append_stmt(std::unique_ptr<Stmt>&& stmt) {
