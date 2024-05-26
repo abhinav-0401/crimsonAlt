@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_map>
 #include <vector>
 #include <memory>
 
@@ -16,18 +17,28 @@ public:
     void print_program();
 private:
     std::unique_ptr<Stmt> parse_stmt();
+    std::unique_ptr<Stmt> parse_var_decl();
     std::unique_ptr<Expr> parse_expr();
+    std::unique_ptr<Expr> parse_comparison();
     std::unique_ptr<Expr> parse_term();
     std::unique_ptr<Expr> parse_factor();
+    std::unique_ptr<Expr> parse_primary();
     std::unique_ptr<Expr> parse_num_lit();
     bool not_eof();
     const Token& at();
     const Token& advance();
     void expect(TokenKind kind);
+    VarType get_var_type(const Token& token);
 
     std::vector<Token> m_tokens;
     std::unique_ptr<Program> m_program;
     size_t m_curr;
+
+    std::unordered_map<TokenKind, VarType> m_var_types = {
+        {TokenKind::Int, VarType::Number},
+        {TokenKind::True, VarType::Bool},
+        {TokenKind::False, VarType::Bool},
+    };
 };
 
 } // Crimson

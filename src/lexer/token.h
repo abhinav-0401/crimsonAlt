@@ -30,6 +30,10 @@ enum class TokenKind {
     Colon,
     Semicolon,
     Comma,
+    Equal,
+    EqualEqual,
+    Greater,
+    Less,
 
     // Keywords
     And,
@@ -38,13 +42,14 @@ enum class TokenKind {
     False,
     For,
     Ident,
-    Let,
+    Int,
     NumLiteral,
     NumType,
     Proc,
     If,
     Return,
     True,
+    Var,
     While,
 };
 

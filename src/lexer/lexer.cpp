@@ -56,6 +56,18 @@ Token Lexer::lex_token() {
     case ')':
         token = new_token(m_ch, TokenKind::Rparen);
         break;
+    case ';':
+        token = new_token(m_ch, TokenKind::Semicolon);
+        break;
+    case '=':
+        token = new_token(m_ch, TokenKind::Equal);
+        break;
+    case '>':
+        token = new_token(m_ch, TokenKind::Equal);
+        break;
+    case '<':
+        token = new_token(m_ch, TokenKind::Less);
+        break;
     case '\0':
         token = new_token(m_ch, TokenKind::Eof);
         break;
