@@ -4,7 +4,7 @@ INCLUDE = -I src/
 
 .PHONY: clean clean-leftover run
 
-crimson: build/main.o build/token.o build/lexer.o build/ast.o build/parser.o
+crimson: build/main.o build/token.o build/lexer.o build/ast.o build/parser.o build/typechecker.o
 	@echo "Creating build directory"
 	mkdir -p build
 	@echo "Linking object files"
@@ -31,6 +31,10 @@ build/ast.o: src/parser/ast.cpp
 build/parser.o: src/parser/parser.cpp
 	@echo "Compiling parser.cpp"
 	$(CC) $(CFLAG) $(INCLUDE) -c src/parser/parser.cpp -o parser.o
+
+build/typechecker.o: src/typechecker/typechecker.cpp
+	@echo "Compiling typechecker.cpp"
+	$(CC) $(CFLAG) $(INCLUDE) -c src/typechecker/typechecker.cpp -o typechecker.o
 
 clean:
 	@echo "Cleaning build dir"

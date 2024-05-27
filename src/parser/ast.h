@@ -18,18 +18,20 @@ enum class NodeType {
 enum class VarType {
     Number,
     Bool,
+    Invalid,
 };
 
 class Stmt {
 public:
-    virtual NodeType stmt_type() = 0;
-    virtual void print_info() = 0;
+    virtual NodeType stmt_type() const = 0;
+    virtual void print_info() const = 0;
 };
 
 class Expr : public Stmt {
 public:
-    virtual NodeType stmt_type() = 0;
-    virtual void print_info() = 0;
+    virtual NodeType stmt_type() const = 0;
+    virtual void print_info() const = 0;
+    virtual VarType var_type() const = 0;
 };
 
 class NumLiteral : public Expr {
@@ -37,9 +39,9 @@ public:
     NumLiteral() = default;
     NumLiteral(double value);
     double value();
-    VarType var_type();
-    NodeType stmt_type() override;
-    void print_info() override;
+    VarType var_type() const override;
+    NodeType stmt_type() const override;
+    void print_info() const override;
 
 private:
     double m_value;
@@ -52,9 +54,9 @@ public:
     BoolLiteral() = default;
     BoolLiteral(bool value);
     bool value();
-    VarType var_type();
-    NodeType stmt_type() override;
-    void print_info() override;
+    VarType var_type() const override;
+    NodeType stmt_type() const override;
+    void print_info() const override;
 
 private:
     double m_value;
@@ -66,8 +68,9 @@ class BinaryExpr : public Expr {
 public:
     BinaryExpr() = default;
     BinaryExpr(std::unique_ptr<Expr>, std::unique_ptr<Expr>, Token op);
-    NodeType stmt_type() override;
-    void print_info() override;
+    NodeType stmt_type() const override;
+    void print_info() const override;
+    VarType var_type() const override;
 
 private:
     std::unique_ptr<Expr> m_left;
@@ -80,9 +83,10 @@ class VarDeclStmt : public Stmt {
 public:
     VarDeclStmt() = default;
     VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> m_value);
-    VarType var_type();
-    NodeType stmt_type() override;
-    void print_info() override;
+    const Expr& value();
+    VarType var_type() const;
+    NodeType stmt_type() const override;
+    void print_info() const override;
 
 private:
     Token m_ident;
@@ -94,10 +98,11 @@ private:
 class Program : public Stmt {
 public:
     Program() = default;
-    void append_stmt(std::unique_ptr<Stmt> &&stmt);
+    std::vector<std::unique_ptr<Stmt>>& body();
+    void append_stmt(std::unique_ptr<Stmt>&& stmt);
     void print_body();
-    NodeType stmt_type() override;
-    void print_info() override;
+    NodeType stmt_type() const override;
+    void print_info() const override;
 
 private:
     std::vector<std::unique_ptr<Stmt>> m_body;

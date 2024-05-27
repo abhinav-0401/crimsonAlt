@@ -15,6 +15,7 @@ public:
     Parser(std::vector<Token>&& tokens);
     void parse();
     void print_program();
+    Program& program();
 private:
     std::unique_ptr<Stmt> parse_stmt();
     std::unique_ptr<Stmt> parse_var_decl();

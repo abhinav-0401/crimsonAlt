@@ -26,6 +26,8 @@ void Parser::print_program() {
     m_program->print_body();
 }
 
+Program& Parser::program() { return *m_program; }
+
 std::unique_ptr<Stmt> Parser::parse_stmt() {
     const Token& token = at();
     
@@ -44,10 +46,13 @@ std::unique_ptr<Stmt> Parser::parse_var_decl() {
     advance();
     const Token& ident = advance();
     expect(TokenKind::Colon);
+
     const Token& var_type_tok = advance();
     VarType var_type = get_var_type(var_type_tok);
+
     expect(TokenKind::Equal);
     auto value_expr = parse_expr();
+
     expect(TokenKind::Semicolon);
     return std::make_unique<VarDeclStmt>(ident, var_type, std::move(value_expr));
 }

@@ -73,5 +73,20 @@
     "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
     "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/parser/parser.cpp",
     "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/parser.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "typechecker.o",
+      "src/typechecker/typechecker.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/typechecker/typechecker.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/typechecker.o"
   }
 ]

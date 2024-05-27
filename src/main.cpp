@@ -6,11 +6,13 @@
 #include "lexer/token.h"
 #include "lexer/lexer.h"
 #include "parser/parser.h"
+#include "typechecker/typechecker.h"
 
 int main() {
     std::cout << "This is blasphemy\n";
 
-    std::string src = "var x : int = (5 + 3) < (3 * 3);";
+    // std::string src = "var x : int = (5 + 3) < (3 * 3);";
+    std::string src = "var x : int = 3 + 3;";
     Crimson::Lexer lexer(std::move(src));
 
     // const std::vector<Crimson::Token>& tokens = lexer.lex();
@@ -23,4 +25,6 @@ int main() {
     }
     parser.parse();
     parser.print_program();
+
+    Crimson::typecheck_program(parser.program());
 }
