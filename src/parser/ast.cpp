@@ -2,6 +2,7 @@
 #include <iostream>
 #include <type_traits>
 
+#include "interpreter/object.h"
 #include "ast.h"
 
 namespace Crimson {
@@ -21,6 +22,10 @@ void NumLiteral::print_info() const {
     std::cout << "NumLiteral: " << m_value;
 }
 
+std::unique_ptr<Object> NumLiteral::accept(Interpreter& visitor) {
+    return visitor.visit_num_literal(*this);
+}
+
 
 BoolLiteral::BoolLiteral(bool value)
     : m_value(value) 
@@ -35,6 +40,10 @@ NodeType BoolLiteral::stmt_type() const { return m_node_kind; }
 
 void BoolLiteral::print_info() const {
     std::cout << "BoolLiteral: " << m_value;
+}
+
+std::unique_ptr<Object> BoolLiteral::accept(Interpreter& visitor) {
+    return visitor.visit_bool_literal(*this);
 }
 
 
@@ -79,6 +88,10 @@ VarType BinaryExpr::var_type() const {
     }
 }
 
+std::unique_ptr<Object> BinaryExpr::accept(Interpreter& visitor) {
+    return visitor.visit_binary_expr(*this);
+}
+
 
 VarDeclStmt::VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> value)
     : m_ident(std::move(ident)), m_var_type(var_type), m_value(std::move(value))
@@ -99,6 +112,10 @@ void VarDeclStmt::print_info() const {
     m_value->print_info();
 }
 
+std::unique_ptr<Object> VarDeclStmt::accept(Interpreter& visitor) {
+    return visitor.visit_var_decl(*this);
+}
+
 
 std::vector<std::unique_ptr<Stmt>>& Program::body() { return m_body; }
 
@@ -115,6 +132,10 @@ void Program::print_body() {
 NodeType Program::stmt_type() const { return m_node_kind; }
 
 void Program::print_info() const {
+}
+
+std::unique_ptr<Object> Program::accept(Interpreter& visitor) {
+    return visitor.visit_program(*this);
 }
 
 } // Crimson

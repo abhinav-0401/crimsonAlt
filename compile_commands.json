@@ -88,5 +88,20 @@
     "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
     "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/typechecker/typechecker.cpp",
     "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/typechecker.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I",
+      "src/",
+      "-c",
+      "-o",
+      "interpreter.o",
+      "src/interpreter/interpreter.cpp"
+    ],
+    "directory": "/home/zeoticus/Documents/cs/systemsproj/crimson",
+    "file": "/home/zeoticus/Documents/cs/systemsproj/crimson/src/interpreter/interpreter.cpp",
+    "output": "/home/zeoticus/Documents/cs/systemsproj/crimson/interpreter.o"
   }
 ]

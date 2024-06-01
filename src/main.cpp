@@ -7,6 +7,7 @@
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "typechecker/typechecker.h"
+#include "interpreter/interpreter.h"
 
 int main() {
     std::cout << "This is blasphemy\n";
@@ -27,4 +28,6 @@ int main() {
     parser.print_program();
 
     Crimson::typecheck_program(parser.program());
+    Crimson::Interpreter interpreter;
+    parser.program().accept(interpreter);
 }
