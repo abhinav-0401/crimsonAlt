@@ -36,9 +36,8 @@ private:
     size_t m_curr;
 
     std::unordered_map<TokenKind, VarType> m_var_types = {
-        {TokenKind::Int, VarType::Number},
-        {TokenKind::True, VarType::Bool},
-        {TokenKind::False, VarType::Bool},
+        {TokenKind::Number, VarType::Number},
+        {TokenKind::Bool, VarType::Bool},
     };
 };
 

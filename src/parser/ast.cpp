@@ -12,7 +12,7 @@ NumLiteral::NumLiteral(double value)
 {
 }
 
-double NumLiteral::value() { return m_value; }
+double NumLiteral::value() const { return m_value; }
 
 VarType NumLiteral::var_type() const { return m_var_type; }
 
@@ -22,7 +22,7 @@ void NumLiteral::print_info() const {
     std::cout << "NumLiteral: " << m_value;
 }
 
-std::unique_ptr<Object> NumLiteral::accept(Interpreter& visitor) {
+std::unique_ptr<Object> NumLiteral::accept(Interpreter& visitor) const {
     return visitor.visit_num_literal(*this);
 }
 
@@ -32,7 +32,7 @@ BoolLiteral::BoolLiteral(bool value)
 {
 }
 
-bool BoolLiteral::value() { return m_value; }
+bool BoolLiteral::value() const { return m_value; }
 
 VarType BoolLiteral::var_type() const { return m_var_type; }
 
@@ -42,7 +42,7 @@ void BoolLiteral::print_info() const {
     std::cout << "BoolLiteral: " << m_value;
 }
 
-std::unique_ptr<Object> BoolLiteral::accept(Interpreter& visitor) {
+std::unique_ptr<Object> BoolLiteral::accept(Interpreter& visitor) const {
     return visitor.visit_bool_literal(*this);
 }
 
@@ -72,6 +72,13 @@ static VarType numeric_var_type(VarType left_type, VarType right_type) {
     return VarType::Invalid;
 }
 
+static VarType bool_var_type(VarType left_type, VarType right_type) {
+    if ((left_type == VarType::Number) && (right_type == VarType::Number)) {
+        return VarType::Bool;
+    }
+    return VarType::Invalid;
+}
+
 VarType BinaryExpr::var_type() const {
     auto left_type = m_left->var_type();
     auto right_type = m_right->var_type();
@@ -80,25 +87,32 @@ VarType BinaryExpr::var_type() const {
     case TokenKind::Plus:
     case TokenKind::Minus:
     case TokenKind::Star:
-    case TokenKind::Greater:
-    case TokenKind::Less:
     case TokenKind::Slash: {
         return numeric_var_type(left_type, right_type);
     }
+    case TokenKind::Greater:
+    case TokenKind::Less: {
+        return bool_var_type(left_type, right_type);
+    }
     }
 }
 
-std::unique_ptr<Object> BinaryExpr::accept(Interpreter& visitor) {
+std::unique_ptr<Object> BinaryExpr::accept(Interpreter& visitor) const {
     return visitor.visit_binary_expr(*this);
 }
 
+const Expr& BinaryExpr::left() const { return *m_left; }
+
+const Expr& BinaryExpr::right() const { return *m_right; }
+
+const Token& BinaryExpr::op() const { return m_op; }
 
 VarDeclStmt::VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> value)
     : m_ident(std::move(ident)), m_var_type(var_type), m_value(std::move(value))
 {
 }
 
-const Expr& VarDeclStmt::value() { return *m_value; }
+const Expr& VarDeclStmt::value() const { return *m_value; }
 
 VarType VarDeclStmt::var_type() const { return m_var_type; }
 
@@ -112,12 +126,12 @@ void VarDeclStmt::print_info() const {
     m_value->print_info();
 }
 
-std::unique_ptr<Object> VarDeclStmt::accept(Interpreter& visitor) {
+std::unique_ptr<Object> VarDeclStmt::accept(Interpreter& visitor) const {
     return visitor.visit_var_decl(*this);
 }
 
 
-std::vector<std::unique_ptr<Stmt>>& Program::body() { return m_body; }
+const std::vector<std::unique_ptr<Stmt>>& Program::body() const { return m_body; }
 
 void Program::append_stmt(std::unique_ptr<Stmt>&& stmt) {
     m_body.push_back(std::move(stmt));
@@ -134,7 +148,7 @@ NodeType Program::stmt_type() const { return m_node_kind; }
 void Program::print_info() const {
 }
 
-std::unique_ptr<Object> Program::accept(Interpreter& visitor) {
+std::unique_ptr<Object> Program::accept(Interpreter& visitor) const {
     return visitor.visit_program(*this);
 }
 

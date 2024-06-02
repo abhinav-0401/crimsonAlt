@@ -16,11 +16,11 @@ class Program;
 class Interpreter {
 public:
     Interpreter() = default;
-    std::unique_ptr<Object> visit_num_literal(NumLiteral& num_lit);
-    std::unique_ptr<Object> visit_bool_literal(BoolLiteral& bool_lit);
-    std::unique_ptr<Object> visit_binary_expr(BinaryExpr& binary_expr);
-    std::unique_ptr<Object> visit_var_decl(VarDeclStmt& var_decl);
-    std::unique_ptr<Object> visit_program(Program& prorgam);
+    std::unique_ptr<Object> visit_num_literal(const NumLiteral& num_lit);
+    std::unique_ptr<Object> visit_bool_literal(const BoolLiteral& bool_lit);
+    std::unique_ptr<Object> visit_binary_expr(const BinaryExpr& binary_expr);
+    std::unique_ptr<Object> visit_var_decl(const VarDeclStmt& var_decl);
+    std::unique_ptr<Object> visit_program(const Program& prorgam);
 };
 
 } // Crimson

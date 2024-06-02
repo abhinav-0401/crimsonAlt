@@ -82,7 +82,7 @@ std::unique_ptr<Expr> Parser::parse_term() {
 }
 
 
-std::unique_ptr<Expr> Parser::parse_factor() {    
+std::unique_ptr<Expr> Parser::parse_factor() {
     auto left = parse_primary();
 
     while (at().kind() == TokenKind::Star || at().kind() == TokenKind::Slash) {

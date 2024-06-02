@@ -38,11 +38,12 @@ enum class TokenKind {
     // Keywords
     And,
     Break,
+    Bool,
     Else,
     False,
     For,
     Ident,
-    Int,
+    Number,
     NumLiteral,
     NumType,
     Proc,

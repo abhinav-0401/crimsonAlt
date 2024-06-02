@@ -29,7 +29,7 @@ class Stmt {
 public:
     virtual NodeType stmt_type() const = 0;
     virtual void print_info() const = 0;
-    virtual std::unique_ptr<Object> accept(Interpreter& visitor) = 0;
+    virtual std::unique_ptr<Object> accept(Interpreter& visitor) const = 0;
 };
 
 class Expr : public Stmt {
@@ -37,18 +37,18 @@ public:
     virtual NodeType stmt_type() const = 0;
     virtual void print_info() const = 0;
     virtual VarType var_type() const = 0;
-    virtual std::unique_ptr<Object> accept(Interpreter& visitor) = 0;
+    virtual std::unique_ptr<Object> accept(Interpreter& visitor) const = 0;
 };
 
 class NumLiteral : public Expr {
 public:
     NumLiteral() = default;
     NumLiteral(double value);
-    double value();
+    double value() const;
     VarType var_type() const override;
     NodeType stmt_type() const override;
     void print_info() const override;
-    std::unique_ptr<Object> accept(Interpreter& visitor) override;
+    std::unique_ptr<Object> accept(Interpreter& visitor) const override;
 
 private:
     double m_value;
@@ -60,11 +60,11 @@ class BoolLiteral : public Expr {
 public:
     BoolLiteral() = default;
     BoolLiteral(bool value);
-    bool value();
+    bool value() const;
     VarType var_type() const override;
     NodeType stmt_type() const override;
     void print_info() const override;
-    std::unique_ptr<Object> accept(Interpreter& visitor) override;
+    std::unique_ptr<Object> accept(Interpreter& visitor) const override;
 
 private:
     double m_value;
@@ -79,7 +79,10 @@ public:
     NodeType stmt_type() const override;
     void print_info() const override;
     VarType var_type() const override;
-    std::unique_ptr<Object> accept(Interpreter& visitor) override;
+    std::unique_ptr<Object> accept(Interpreter& visitor) const override;
+    const Expr& left() const;
+    const Expr& right() const;
+    const Token& op() const;
 
 private:
     std::unique_ptr<Expr> m_left;
@@ -92,11 +95,11 @@ class VarDeclStmt : public Stmt {
 public:
     VarDeclStmt() = default;
     VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> m_value);
-    const Expr& value();
+    const Expr& value() const;
     VarType var_type() const;
     NodeType stmt_type() const override;
     void print_info() const override;
-    std::unique_ptr<Object> accept(Interpreter& visitor) override;
+    std::unique_ptr<Object> accept(Interpreter& visitor) const override;
 
 private:
     Token m_ident;
@@ -108,12 +111,12 @@ private:
 class Program : public Stmt {
 public:
     Program() = default;
-    std::vector<std::unique_ptr<Stmt>>& body();
+    const std::vector<std::unique_ptr<Stmt>>& body() const;
     void append_stmt(std::unique_ptr<Stmt>&& stmt);
     void print_body();
     NodeType stmt_type() const override;
     void print_info() const override;
-    std::unique_ptr<Object> accept(Interpreter& visitor) override;
+    std::unique_ptr<Object> accept(Interpreter& visitor) const override;
 
 private:
     std::vector<std::unique_ptr<Stmt>> m_body;

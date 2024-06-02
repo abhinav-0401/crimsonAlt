@@ -5,8 +5,8 @@
 
 namespace Crimson {
 
-void typecheck_program(Program& program) {
-    for (std::unique_ptr<Stmt>& stmt : program.body()) {
+void typecheck_program(const Program& program) {
+    for (const std::unique_ptr<Stmt>& stmt : program.body()) {
         if (!typecheck_stmt(*stmt)) {
             print_type_err(*stmt, "Invalid types\n");
             break;
@@ -14,22 +14,22 @@ void typecheck_program(Program& program) {
     }
 }
 
-bool typecheck_stmt(Stmt& stmt) {
+bool typecheck_stmt(const Stmt& stmt) {
     switch (stmt.stmt_type()) {
     case NodeType::VarDeclStmt: {
-        return typecheck_vardecl(dynamic_cast<VarDeclStmt&>(stmt));
+        return typecheck_vardecl(dynamic_cast<const VarDeclStmt&>(stmt));
     }
     }
 }
 
-bool typecheck_vardecl(VarDeclStmt& stmt) {
+bool typecheck_vardecl(const VarDeclStmt& stmt) {
     if (stmt.var_type() == stmt.value().var_type()) {
         return true;
     }
     return false;
 }
 
-void print_type_err(Stmt& stmt, std::string msg) {
+void print_type_err(const Stmt& stmt, std::string msg) {
     std::cout << msg;
 }
 
