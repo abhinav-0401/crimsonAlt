@@ -4,6 +4,15 @@ INCLUDE = -I src/
 
 .PHONY: clean clean-leftover run
 
+all: build/main.o build/token.o build/lexer.o build/ast.o build/parser.o build/typechecker.o build/interpreter.o \
+	build/object.o
+	@echo "Creating build directory"
+	mkdir -p build
+	@echo "Linking object files"
+	mv *.o build/
+	$(CC) build/*.o -o build/crimson
+	rm build/*.o
+
 crimson: build/main.o build/token.o build/lexer.o build/ast.o build/parser.o build/typechecker.o build/interpreter.o \
 	build/object.o
 	@echo "Creating build directory"

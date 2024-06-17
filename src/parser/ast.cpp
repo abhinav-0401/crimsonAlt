@@ -107,8 +107,8 @@ const Expr& BinaryExpr::right() const { return *m_right; }
 
 const Token& BinaryExpr::op() const { return m_op; }
 
-VarDeclStmt::VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> value)
-    : m_ident(std::move(ident)), m_var_type(var_type), m_value(std::move(value))
+VarDeclStmt::VarDeclStmt(Token ident, VarType var_type, bool is_const, std::unique_ptr<Expr> value)
+    : m_ident(std::move(ident)), m_var_type(var_type), m_is_const(is_const), m_value(std::move(value))
 {
 }
 
@@ -123,6 +123,7 @@ void VarDeclStmt::print_info() const {
     std::cout << "\tIdent: " << m_ident.literal() << "\n";
     std::cout << "\tType: " << static_cast<std::underlying_type<VarType>::type>(m_var_type) << "\n";
     std::cout << "\tValue: \n";
+    std::cout << "\tIsConst: " << m_is_const << "\n";
     m_value->print_info();
 }
 

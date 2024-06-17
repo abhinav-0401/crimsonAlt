@@ -94,7 +94,7 @@ private:
 class VarDeclStmt : public Stmt {
 public:
     VarDeclStmt() = default;
-    VarDeclStmt(Token ident, VarType var_type, std::unique_ptr<Expr> m_value);
+    VarDeclStmt(Token ident, VarType var_type, bool is_const, std::unique_ptr<Expr> m_value);
     const Expr& value() const;
     VarType var_type() const;
     NodeType stmt_type() const override;
@@ -104,6 +104,7 @@ public:
 private:
     Token m_ident;
     VarType m_var_type;
+    bool m_is_const;
     std::unique_ptr<Expr> m_value;
     NodeType m_node_kind = NodeType::VarDeclStmt;
 };

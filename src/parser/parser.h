@@ -29,6 +29,7 @@ private:
     const Token& at();
     const Token& advance();
     void expect(TokenKind kind);
+    TokenKind expect_either(TokenKind first, TokenKind second);
     VarType get_var_type(const Token& token);
 
     std::vector<Token> m_tokens;

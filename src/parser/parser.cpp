@@ -50,11 +50,18 @@ std::unique_ptr<Stmt> Parser::parse_var_decl() {
     const Token& var_type_tok = advance();
     VarType var_type = get_var_type(var_type_tok);
 
-    expect(TokenKind::Equal);
+    auto kind = expect_either(TokenKind::Equal, TokenKind::Colon);
     auto value_expr = parse_expr();
 
     expect(TokenKind::Semicolon);
-    return std::make_unique<VarDeclStmt>(ident, var_type, std::move(value_expr));
+
+    if (kind == TokenKind::Equal) {
+        std::cout << "equal\n";
+        return std::make_unique<VarDeclStmt>(ident, var_type, false, std::move(value_expr));
+    } else {
+        std::cout << "colon\n";
+        return std::make_unique<VarDeclStmt>(ident, var_type, true, std::move(value_expr));
+    }
 }
 
 std::unique_ptr<Expr> Parser::parse_expr() {
@@ -153,6 +160,17 @@ void Parser::expect(TokenKind kind) {
         std::exit(1);
     }
     advance();
+}
+
+TokenKind Parser::expect_either(TokenKind first, TokenKind second) {
+    if (at().kind() != first && at().kind() != second) {
+        std::cout << at().literal() << "\n";
+        std::cerr << "Error: Unexpected token\n";
+        std::exit(1);
+    }
+    TokenKind kind = at().kind();
+    advance();
+    return kind == first ? first : second;
 }
 
 VarType Parser::get_var_type(const Token& token) {
